@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #page {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div id="page">
+        <form novalidate>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name">
+            </div>
+            <div>
+                <label for="rows">Rows:</label>
+                <input type="text" id="rows">
+            </div>
+            <div>
+                <label for="cols">Cols:</label>
+                <input type="text" id="cols">
+            </div>
+            <button id="newGameBtn">Start New Game</button>
+            <button id="resetGameBtn">Reset</button>
+            <div>
+                <label for="searchAlgo">Search Algo:</label>
+                <select id="selectAlgo">
+                    <option value="dfs">DFS</option>
+                    <option value="bfs">BFS</option>
+                    <option value="a">A*</option>
+                </select>
+            </div>
+            <button id="solveGameBtn">Solve Game</button>
+        </form>
+        <div id="maze"></div>
+    </div>
+</body>
+</html>
