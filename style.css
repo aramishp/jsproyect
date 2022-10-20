@@ -1,0 +1,41 @@
+#page {
+    display: flex;
+    justify-content: space-around;
+}
+canvas {
+    border: 3px solid black;
+    width: 40vw;
+    height: 40vw;
+    background-color: white;
+}
+h1 {
+    text-align: center;
+    background-color: #AB51B3;
+    padding: 20px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 2.3em;
+}
+body {
+    background-color: orange;
+    margin: 0;
+    font-size: 1.5em;
+    
+}
+div {
+    padding: 10px;
+}
+#page input {
+    float: right;
+    margin: 5px;
+}
+#newGameBtn {
+    margin-left: 87px;
+}
+#solveGameBtn {
+    margin-left: 87px;
+}
+
+form {
+    padding-left: 5vw;
+}

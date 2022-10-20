@@ -5,13 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        #page {
-            display: flex;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>Welcome to Maze Game!</h1>
     <div id="page">
         <form novalidate>
             <div>
@@ -26,6 +23,10 @@
                 <label for="cols">Cols:</label>
                 <input type="text" id="cols">
             </div>
+            <div>
+                <label for="levels">Levels:</label>
+                <input type="text" id="levels">
+            </div>
             <button id="newGameBtn">Start New Game</button>
             <button id="resetGameBtn">Reset</button>
             <div>
@@ -38,7 +39,12 @@
             </div>
             <button id="solveGameBtn">Solve Game</button>
         </form>
-        <div id="maze"></div>
+        <div id="maze">
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
+    <script>
+
+    </script>
 </body>
 </html>
