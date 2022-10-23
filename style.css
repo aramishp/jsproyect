@@ -3,11 +3,11 @@
     justify-content: space-around;
 }
 #maze {
-    border: 5px solid black;
     width: 35vw;
     height: 35vw;
     background-color: white;
     padding: 0;
+    border: 5px solid black;
 }
 h1 {
     text-align: center;
@@ -45,31 +45,22 @@ form {
     width: 100%;
     height: 100%;
     padding: 0;
-    background-color: yellow;
-    
-}
-
-#maze div.level {
-    display: block;
+    display: none;    
 }
 
 .row {
     width: 100%;
     padding: 0;
-    background-color: rebeccapurple;
+    
     display: flex;
 }
 
 .col {
     height: 100%;
     padding: 0;
-    background-color: green;
     
+    border: 2px solid black;
 }
 
-.colSep {
-    height: 100%;
-    padding: 0;
-    width: 3px;
-    background-color: black;
-}
+
+

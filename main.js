@@ -28,8 +28,8 @@ function displayGame(game, elem) {
     const gameMaze = game.maze;
     const gameMap = game.moves;
 
-    const rowHeight = 100 / (gameMaze[0].length);
-    const cellSize = 100 / (gameMaze[0][0].length);
+    const rowHeight = 100 / gameMaze[0].length;
+    const cellSize = 100 / gameMaze[0][0].length;
     
     for (let i = 0; i < gameMaze.length; i++) {
         const newLevel = document.createElement('div');
@@ -42,20 +42,43 @@ function displayGame(game, elem) {
             
             for (let k = 0; k < gameMaze[0][0].length; k++) {
                 const booleanArr = gameMap.get(gameMaze[i][j][k])
-                
+
                 const newCol = document.createElement('div');
                 newCol.classList.add('col');
                 newCol.style.width = cellSize + '%';
-                
-                const newSep = document.createElement('div');
-                newSep.classList.add('colSep');
-                newSep.style.backgroundColor = 'black';
 
-                newRow.appendChild(newCol);
-                if (k < gameMaze[0][0].length - 1) {
-                    newRow.appendChild(newSep);
+                if (booleanArr[Moves.right]) {
+                    newCol.style.borderRight = '2px solid white';
                 }
-                
+                if (booleanArr[Moves.left]) {
+                    newCol.style.borderLeft = '2px solid white';
+                }
+                if (booleanArr[Moves.forward]) {
+                    newCol.style.borderTop = '2px solid white';
+                }
+                if (booleanArr[Moves.backward]) {
+                    newCol.style.borderBottom = '2px solid white';
+                }
+                if (gameMaze[i][j][k] === 'S') {
+                    newLevel.style.display = 'block';
+                    newCol.style.backgroundColor = 'green';
+                } else if (booleanArr[Moves.up] && booleanArr[Moves.down]) {
+                    newCol.style.backgroundImage = "url('pngegg.png')";
+                    newCol.style.backgroundSize = 'contain';
+                    newCol.style.backgroundRepeat = 'no-repeat';
+                    newCol.style.backgroundPosition = 'center';
+                } else if (booleanArr[Moves.up]) {
+                    newCol.style.backgroundImage = "url('up.png')";
+                    newCol.style.backgroundSize = '40%';
+                    newCol.style.backgroundRepeat = 'no-repeat';
+                    newCol.style.backgroundPosition = 'center';
+                } else if (booleanArr[Moves.down]) {
+                    newCol.style.backgroundImage = "url('down.png')";
+                    newCol.style.backgroundSize = '40%';
+                    newCol.style.backgroundRepeat = 'no-repeat';
+                    newCol.style.backgroundPosition = 'center';
+                }   
+                newRow.appendChild(newCol);
             }
             newLevel.appendChild(newRow);
         }
