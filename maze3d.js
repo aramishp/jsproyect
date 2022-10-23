@@ -1,4 +1,6 @@
-module.exports = class Maze3d {
+import SimpleMaze3dGenerator from "./representation/simple_maze3d_generator.js";
+
+class Maze3d {
     /**
      * A class that represents the entire 3d maze.
      * @param {Number} nLevels 
@@ -42,6 +44,7 @@ module.exports = class Maze3d {
     }
     
     toString() {
+        let s = '';
         let header = '';
         let footer = '';
 
@@ -51,7 +54,7 @@ module.exports = class Maze3d {
         }
 
         for (let i = 0; i < this.#nLevels; i++) {
-            console.log(`Level ${i}\n\n` + header);
+            s += `Level ${i}\n\n` + header + '\n';
             for (let j = 0; j < this.#nRows; j++) {
                 let cells = '|';
                 let lineSpacing = '|';
@@ -84,13 +87,15 @@ module.exports = class Maze3d {
                     }
                     lineSpacing += '+';
                 }
-                console.log(cells);
+                s += cells + '\n';
                 if (j !== this.#nRows - 1) {
-                    console.log(lineSpacing);
+                    s += lineSpacing + '\n';
                 }
             }    
-            console.log(footer + '\n');      
+            s += footer + '\n';      
         }
+        return s;
     }
 }
 
+export default Maze3d;

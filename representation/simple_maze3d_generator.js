@@ -1,4 +1,6 @@
-export class SimpleMaze3dGenerator extends Maze3dGenerator {
+import Maze3dGenerator from "./maze3d_generator.js";
+
+class SimpleMaze3dGenerator extends Maze3dGenerator {
     static generate(nLevels, nRows, nCols, map) {
         function randomCondition() {
             const condition = Math.floor(Math.random() * 2);
@@ -132,13 +134,18 @@ export class SimpleMaze3dGenerator extends Maze3dGenerator {
                 for (let k = 0; k < nCols; k++) {
                     const booleanArr = new Array(6);
 
-                    if (i === 0) {
+                    if (nLevels !== 1) {
+                        if (i === 0) {
+                            booleanArr[Moves.down] = false;
+                        } else if (i === nLevels - 1) {
+                            booleanArr[Moves.up] = false;
+                        } 
+                        if (i > 0) {
+                            booleanArr[Moves.down] = map.get(arr[i-1][j][k])[Moves.up];
+                        }
+                    } else {
                         booleanArr[Moves.down] = false;
-                    } else if (i === nLevels - 1) {
                         booleanArr[Moves.up] = false;
-                    } 
-                    if (i > 0) {
-                        booleanArr[Moves.down] = map.get(arr[i-1][j][k])[Moves.up];
                     }
 
                     if(j === 0) {
@@ -157,6 +164,7 @@ export class SimpleMaze3dGenerator extends Maze3dGenerator {
                     } 
                     if (k > 0) {
                         booleanArr[Moves.left] = map.get(arr[i][j][k-1])[Moves.right];
+                        //booleanArr[Moves.left] = map.get(arr[i][j][k-1])[Moves.right];
                     }
 
                     for (let l = 0; l < booleanArr.length; l++) {
@@ -170,8 +178,10 @@ export class SimpleMaze3dGenerator extends Maze3dGenerator {
                 }
             }
         }
+        
         setStartFinish(nLevels, nRows, nCols, arr, map);
         
+
         return arr;
     }
 
@@ -179,3 +189,5 @@ export class SimpleMaze3dGenerator extends Maze3dGenerator {
         throw new Error('This class only provides functions');
     }
 }
+
+export default SimpleMaze3dGenerator;

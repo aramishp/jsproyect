@@ -2,11 +2,12 @@
     display: flex;
     justify-content: space-around;
 }
-canvas {
-    border: 3px solid black;
-    width: 40vw;
-    height: 40vw;
+#maze {
+    border: 5px solid black;
+    width: 35vw;
+    height: 35vw;
     background-color: white;
+    padding: 0;
 }
 h1 {
     text-align: center;
@@ -38,4 +39,37 @@ div {
 
 form {
     padding-left: 5vw;
+}
+
+.level {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: yellow;
+    
+}
+
+#maze div.level {
+    display: block;
+}
+
+.row {
+    width: 100%;
+    padding: 0;
+    background-color: rebeccapurple;
+    display: flex;
+}
+
+.col {
+    height: 100%;
+    padding: 0;
+    background-color: green;
+    
+}
+
+.colSep {
+    height: 100%;
+    padding: 0;
+    width: 3px;
+    background-color: black;
 }

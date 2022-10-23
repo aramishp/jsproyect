@@ -30,7 +30,7 @@ class Maze3d {
         this.#nLevels = nLevels;
         this.#nRows = nRows;
         this.#nCols = nCols;
-        this.#maze = KruskalMaze3dGenerator.generate(nLevels, nRows, nCols, this.#moves);
+        this.#maze = DFSMaze3dGenerator.generate(nLevels, nRows, nCols, this.#moves);
     }
 
     get moves() {

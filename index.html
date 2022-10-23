@@ -27,24 +27,20 @@
                 <label for="levels">Levels:</label>
                 <input type="text" id="levels">
             </div>
-            <button id="newGameBtn">Start New Game</button>
+            <button id="newGameBtn" type="button">Start New Game</button>
             <button id="resetGameBtn">Reset</button>
             <div>
                 <label for="searchAlgo">Search Algo:</label>
                 <select id="selectAlgo">
-                    <option value="dfs">DFS</option>
                     <option value="bfs">BFS</option>
+                    <option value="dfs">DFS</option>
                     <option value="a">A*</option>
                 </select>
             </div>
             <button id="solveGameBtn">Solve Game</button>
         </form>
-        <div id="maze">
-            <canvas id="canvas"></canvas>
-        </div>
+        <div id="maze"></div>
     </div>
-    <script>
-
-    </script>
+    <script src="main.js" type="module"></script>
 </body>
 </html>
