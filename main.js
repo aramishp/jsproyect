@@ -62,21 +62,18 @@ function displayGame(game, elem) {
                 if (gameMaze[i][j][k] === 'S') {
                     newLevel.style.display = 'block';
                     newCol.style.backgroundColor = 'green';
-                } else if (booleanArr[Moves.up] && booleanArr[Moves.down]) {
-                    newCol.style.backgroundImage = "url('pngegg.png')";
+                    newCol.style.backgroundImage = 'url(ball.png)';
                     newCol.style.backgroundSize = 'contain';
                     newCol.style.backgroundRepeat = 'no-repeat';
                     newCol.style.backgroundPosition = 'center';
+                } else if (gameMaze[i][j][k] === 'G') {
+                    newCol.style.backgroundColor = 'red';
+                } else if (booleanArr[Moves.up] && booleanArr[Moves.down]) {
+                    newCol.classList.add('upAndDown');
                 } else if (booleanArr[Moves.up]) {
-                    newCol.style.backgroundImage = "url('up.png')";
-                    newCol.style.backgroundSize = '40%';
-                    newCol.style.backgroundRepeat = 'no-repeat';
-                    newCol.style.backgroundPosition = 'center';
+                    newCol.classList.add('up');
                 } else if (booleanArr[Moves.down]) {
-                    newCol.style.backgroundImage = "url('down.png')";
-                    newCol.style.backgroundSize = '40%';
-                    newCol.style.backgroundRepeat = 'no-repeat';
-                    newCol.style.backgroundPosition = 'center';
+                    newCol.classList.add('down');
                 }   
                 newRow.appendChild(newCol);
             }

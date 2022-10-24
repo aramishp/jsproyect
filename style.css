@@ -45,22 +45,39 @@ form {
     width: 100%;
     height: 100%;
     padding: 0;
-    display: none;    
+    display: none; 
+     
 }
 
 .row {
     width: 100%;
     padding: 0;
-    
     display: flex;
 }
 
 .col {
     height: 100%;
     padding: 0;
-    
     border: 2px solid black;
 }
 
+.upAndDown {
+    background-image: url(pngegg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+} 
 
+.up {
+    background-image: url(up.png);
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
+.down {
+    background-image: url(down.png);
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
