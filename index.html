@@ -10,25 +10,29 @@
 <body>
     <h1>Welcome to Maze Game!</h1>
     <div id="page">
-        <form novalidate>
+        <form novalidate id="form">
             <div>
                 <label for="name">Name:</label>
-                <input type="text" id="name">
+                <input type="text" id="name" required pattern="[a-zA-Z]*">
+                <span class="error" aria-live="polite"></span>
             </div>
             <div>
                 <label for="rows">Rows:</label>
-                <input type="text" id="rows">
+                <input type="text" id="rows" required pattern="[0-9]*">
+                <span class="error" aria-live="polite"></span>
             </div>
             <div>
                 <label for="cols">Cols:</label>
-                <input type="text" id="cols">
+                <input type="text" id="cols" required pattern="[0-9]*">
+                <span class="error" aria-live="polite"></span>
             </div>
             <div>
                 <label for="levels">Levels:</label>
-                <input type="text" id="levels">
+                <input type="text" id="levels" required pattern="[0-9]*">
+                <span class="error" aria-live="polite"></span>
             </div>
-            <button id="newGameBtn" type="button">Start New Game</button>
-            <button id="resetGameBtn">Reset</button>
+            <button id="newGameBtn">Start New Game</button>
+            <button id="resetGameBtn" type="button">Reset</button>
             <div>
                 <label for="searchAlgo">Search Algo:</label>
                 <select id="selectAlgo">
@@ -37,7 +41,7 @@
                     <option value="a">A*</option>
                 </select>
             </div>
-            <button id="solveGameBtn">Solve Game</button>
+            <button id="solveGameBtn" type="button">Solve Game</button>
         </form>
         <div id="maze"></div>
     </div>

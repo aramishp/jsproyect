@@ -3,11 +3,12 @@
     justify-content: space-around;
 }
 #maze {
-    width: 35vw;
-    height: 35vw;
+    width: 40vw;
+    height: 40vw;
     background-color: white;
     padding: 0;
     border: 5px solid black;
+    position: relative;
 }
 h1 {
     text-align: center;
@@ -25,6 +26,7 @@ body {
 }
 div {
     padding: 10px;
+    box-sizing: border-box;
 }
 #page input {
     float: right;
@@ -46,7 +48,7 @@ form {
     height: 100%;
     padding: 0;
     display: none; 
-     
+    
 }
 
 .row {
@@ -62,22 +64,54 @@ form {
 }
 
 .upAndDown {
-    background-image: url(pngegg.png);
+    background-image: url(images/pngegg.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 } 
 
 .up {
-    background-image: url(up.png);
-    background-size: 40%;
+    background-image: url(images/up.png);
+    background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .down {
-    background-image: url(down.png);
-    background-size: 40%;
+    background-image: url(images/down.png);
+    background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
 }
+
+input {      
+    border: 1px solid #333;
+  }
+
+  /* The style for invalid fields */
+  input:invalid {
+    border-color: #900;
+    background-color: #fdd;
+  }
+
+  input:focus:invalid {
+    outline: none;
+  }
+
+  /* The style of our error messages */
+  .error {
+    color: white;
+    background-color: #900;
+    padding: 0;
+    border-radius: 5px;
+    font-size: 90%;
+  }
+
+  .error.active {
+    padding: 2px;
+  }
+
+img {
+    position: absolute;
+}
+
