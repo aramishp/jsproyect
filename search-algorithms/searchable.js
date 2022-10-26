@@ -9,3 +9,5 @@ class Searchable {
         }
     }
 }
+
+export default Searchable;

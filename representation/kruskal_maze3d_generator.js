@@ -1,5 +1,22 @@
+import Maze3dGenerator from "./maze3d_generator.js";
+
+//This class generate the maze using Kruskal method for generate mazes
+//See more in https://en.wikipedia.org/wiki/Maze_generation_algorithm
+
 class KruskalMaze3dGenerator extends Maze3dGenerator {
+    /**
+     * This function generate the maze
+     * @param {Number} nLevels 
+     * @param {Number} nRows 
+     * @param {Number} nCols 
+     * @param {Number} map 
+     * @returns a 3d Array of cells, and set the map with the moves.
+     */
     static generate(nLevels, nRows, nCols, map) {
+        /**
+         * This function return a random Number.
+         * @returns Number
+         */
         function randomNumber(max, min = 0) {
             return Math.floor(Math.random() * max) - min;
         }
@@ -305,6 +322,7 @@ class KruskalMaze3dGenerator extends Maze3dGenerator {
             }         
         }
 
+        //Set the entry and the exit randomly
         let startLevel;
         let finishLevel;
         let startRow;
@@ -340,3 +358,5 @@ class KruskalMaze3dGenerator extends Maze3dGenerator {
         throw new Error('This class only provides functions');
     }
 }
+
+export default KruskalMaze3dGenerator;

@@ -2,35 +2,43 @@ import Searchable from "./searchable.js";
 import Adapter2D from "./adapters/2dAdapter.js";
 import Adapter3D from "./adapters/3dAdapter.js";
 
-class BreadthFirstSearch extends Searchable {
-    //The BFS algorithm
+class DepthFirstSearch extends Searchable{
     static search(game, source = 'S', target = 'G') {
-        function BFS(root) {
+        //The DFS algorithm
+        function DFS(root) {
             const stack = [];
             stack.push(root);
             
-
             const visited = new Set();
-
+            
             while(stack.length > 0) {
-                const currNode = stack.shift();
+                const currNode = stack.pop();
 
                 if (currNode.value === target) {
                     return visited.size;
                 }
                 
                 visited.add(currNode.value);
-                
+
                 for (let i = 0; i < currNode.children.length; i++) {
                     if (!visited.has(currNode.children[i].value)) {
-                        stack.push(currNode.children[i]);
+                        let addToStack = true;
+                        for (let j = 0; j < stack.length; j++) {
+                            if (stack[j].value === currNode.children[i].value) {
+                                addToStack = false;
+                                break;
+                            }
+                        }
+                        if (addToStack) {
+                            stack.push(currNode.children[i]);
+                        }
                     }
                 }
             }
-            return 'false';
+            return false;
         }
-
-        //This function search the start node.
+        
+        //This function search the position of the entry
         function searchStartNode(problem) {
             for (let i = 0; i < problem.length; i++) {
                 for (let j = 0; j < problem[0].length; j++) {
@@ -45,10 +53,10 @@ class BreadthFirstSearch extends Searchable {
         
         const startNode = searchStartNode(game.maze);
         if (game.maze.length === 1) {
-            return BFS(Adapter2D.adapt(game.maze, startNode, game.moves));
+            return DFS(Adapter2D.adapt(game.maze, startNode, game.moves));
         } else if (game.maze.length > 1) {
-            return BFS(Adapter3D.adapt(game.maze, startNode, game.moves));
-        }     
+            return DFS(Adapter3D.adapt(game.maze, startNode, game.moves));
+        }  
     }
 
     constructor() {
@@ -56,4 +64,4 @@ class BreadthFirstSearch extends Searchable {
     }
 }
 
-export default BreadthFirstSearch;
+export default DepthFirstSearch;

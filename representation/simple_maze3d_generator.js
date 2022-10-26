@@ -1,7 +1,23 @@
 import Maze3dGenerator from "./maze3d_generator.js";
 
+//This class generate the maze using a simple maze generator.
+//Go randomly in levels, or rows or cols, and every time that advance in one direction
+//clean the walls between the cells.
+
 class SimpleMaze3dGenerator extends Maze3dGenerator {
+    /**
+     * This function generate the maze
+     * @param {Number} nLevels 
+     * @param {Number} nRows 
+     * @param {Number} nCols 
+     * @param {Number} map 
+     * @returns a 3d Array of cells, and set the map with the moves.
+     */
     static generate(nLevels, nRows, nCols, map) {
+        /**
+         * This function return a boolean randomly
+         * @returns boolean
+         */
         function randomCondition() {
             const condition = Math.floor(Math.random() * 2);
             if (condition >= 1) {
@@ -10,10 +26,19 @@ class SimpleMaze3dGenerator extends Maze3dGenerator {
             return false;
         }
 
+        //This function return a number between min and max - 1
         function randomNumber(max, min = 0) {
             return Math.floor(Math.random() * max) - min;
         }
 
+        /**
+         * This function set the Start 'S', the exit 'G' and clean the path
+         * @param {Number} nLevels 
+         * @param {Number} nRows 
+         * @param {Number} nCols 
+         * @param {Array} maze 
+         * @param {Map} map 
+         */
         function setStartFinish(nLevels, nRows, nCols, maze, map) {
             //left, right, forward, backward, up, down
 
@@ -118,6 +143,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator {
             }
         }
 
+        //Create the maze array
         const arr = new Array(nLevels).fill().map(() => new Array(nRows).fill().map(() => new Array(nCols).fill().map(() => Symbol())));
 
         const Moves = {
@@ -129,6 +155,7 @@ class SimpleMaze3dGenerator extends Maze3dGenerator {
             down: 5
         };
         
+        //Fill the map with the boolean array for the moves
         for (let i = 0; i < nLevels; i++) {
             for (let j = 0; j < nRows; j++) {
                 for (let k = 0; k < nCols; k++) {
@@ -189,5 +216,6 @@ class SimpleMaze3dGenerator extends Maze3dGenerator {
         throw new Error('This class only provides functions');
     }
 }
+
 
 export default SimpleMaze3dGenerator;

@@ -14,6 +14,7 @@ class Maze3dGenerator {
     }
 
     static measureAlgorithmTime(nLevels, nRows, nCols, map) {
+        //This function just make the string more readable
         function formatString(result) {
             let s = '';
 

@@ -1,4 +1,6 @@
 import SimpleMaze3dGenerator from "./representation/simple_maze3d_generator.js";
+import DFSMaze3dGenerator from "./representation/dfs_maze3d_generator.js";
+import KruskalMaze3dGenerator from "./representation/kruskal_maze3d_generator.js";
 
 class Maze3d {
     /**
@@ -32,7 +34,20 @@ class Maze3d {
         this.#nLevels = nLevels;
         this.#nRows = nRows;
         this.#nCols = nCols;
-        this.#maze = SimpleMaze3dGenerator.generate(nLevels, nRows, nCols, this.#moves);
+        this.#maze;
+    }
+
+    //Ways to generate the maze
+    simpleGenerator() {
+        this.#maze = SimpleMaze3dGenerator.generate(this.#nLevels, this.#nRows, this.#nCols, this.#moves);
+    }
+
+    DFSGenerator() {
+        this.#maze = DFSMaze3dGenerator.generate(this.#nLevels, this.#nRows, this.#nCols, this.#moves);
+    }
+
+    KruskalGenerator() {
+        this.#maze = KruskalMaze3dGenerator.generate(this.#nLevels, this.#nRows, this.#nCols, this.#moves);
     }
 
     get moves() {
@@ -95,6 +110,23 @@ class Maze3d {
             s += footer + '\n';      
         }
         return s;
+    }
+
+    //First save the number of levels, rows and cols, then each cell with the boolean array.
+    gameSave(name) {
+        const arr = new Array();
+        arr.push({ levels: this.#nLevels, rows: this.#nRows, cols: this.#nCols });
+
+        for (let i = 0; i < this.#nLevels; i++) {
+            for (let j = 0; j < this.#nRows; j++) {
+                for (let k = 0; k < this.#nCols; k++) {
+                    const booleanArr = this.#moves.get(this.#maze[i][j][k]);
+                    arr.push({ level: i, row: j, col: k, left: booleanArr[0], right: booleanArr[1],
+                    forward: booleanArr[2], backward: booleanArr[3], up: booleanArr[4], down: booleanArr[5] });
+                }
+            }
+        }
+        localStorage.setItem(name, JSON.stringify(arr));
     }
 }
 

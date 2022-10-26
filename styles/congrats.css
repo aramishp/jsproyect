@@ -1,0 +1,15 @@
+body {
+    background-image: url(../images/youWin.png);
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+div {
+    text-align: center;
+    padding-top: 28%;
+    padding-left: 3%;
+}
+button {
+    padding: 10px;
+    font-size: 1.5rem;
+}

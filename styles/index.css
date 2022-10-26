@@ -33,10 +33,14 @@ div {
     margin: 5px;
 }
 #newGameBtn {
-    margin-left: 87px;
+    margin-left: 130px;
 }
 #solveGameBtn {
-    margin-left: 87px;
+    margin-left: 130px;
+}
+
+#loadBtn {
+    margin-left: 130px;
 }
 
 form {
@@ -64,21 +68,21 @@ form {
 }
 
 .upAndDown {
-    background-image: url(images/pngegg.png);
+    background-image: url(../images/pngegg.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 } 
 
 .up {
-    background-image: url(images/up.png);
+    background-image: url(../images/up.png);
     background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .down {
-    background-image: url(images/down.png);
+    background-image: url(../images/down.png);
     background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
