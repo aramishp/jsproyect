@@ -1,4 +1,5 @@
 import Maze3d from "./maze3d.js";
+import SearchDemo from "./search-demo.js";
 
 const Moves = {
     left: 0,
@@ -8,6 +9,18 @@ const Moves = {
     up: 4,
     down: 5
 };
+
+//SearchDemo.run(50, 50, 50);
+
+//const map = new Map();
+/*const measureSimple = SimpleMaze3dGenerator.measureAlgorithmTime(30, 30, 30, map);
+console.log(measureSimple);
+
+const measureDFS = DFSMaze3dGenerator.measureAlgorithmTime(30, 30, 30, map);
+console.log(measureDFS);
+
+const measureKruskal = KruskalMaze3dGenerator.measureAlgorithmTime(30,30,30,map);
+console.log(measureKruskal);*/
 
 const resetGameBtn = document.getElementById('resetGameBtn');
 const mazeDiv = document.getElementById('maze');
@@ -21,10 +34,13 @@ const rowsError = document.querySelector('#rows + span.error')
 const colsError = document.querySelector('#cols + span.error');
 const levelsError = document.querySelector('#levels + span.error');
 const piece = document.createElement('img');
+const loadBtn = document.getElementById('loadBtn');
+const loadGame = document.getElementById('loadGame');
+const loadError = document.querySelector('#loadGame + span.error');
 const startPosition = new Array(3);
 const currPos = new Array(3);
 const finalPosition = new Array(3);
-let isAWin = false;
+
 let pieceStartLeft;
 let pieceStartTop;
 let cellSize;
@@ -33,13 +49,16 @@ let nCols;
 let nRows;
 let nLevels;
 let game;
+let gameMaze;
+let gameMap;
+let name;
+
 
 nameInputHTML.addEventListener('input', checkNameValidity);
 rowsHTML.addEventListener('input', checkRowValidity);
 colsHTML.addEventListener('input', checkColsValidity);
 levelsHTML.addEventListener('input', checkLevelsValidity);
-
-
+loadGame.addEventListener('input', checkLoadValidity);
 formHTML.addEventListener('submit', validation);
 
 function validation(e) {
@@ -53,6 +72,22 @@ function validation(e) {
     if (isNameValid && isRowValid && isColValid && isLevelValid) {
         startNewGame();
     }
+}
+
+function checkLoadValidity() {
+    if (loadGame.checkValidity()) {
+        loadError.textContent = ''; // Reset the content of the error message
+        loadError.className = 'error'; // Reset the visual state of the error message
+        return true;
+    }
+    
+    if (loadGame.validity.valueMissing) {
+        loadError.textContent = 'You need to enter a name.';
+    } else if (loadGame.validity.patternMismatch) {
+        loadError.textContent = 'The name can contain only alphabet letters.';
+    }
+    loadError.className = 'error active';
+    return false;
 }
 
 function checkNameValidity() {
@@ -120,23 +155,72 @@ function checkLevelsValidity() {
 }
 
 
+function loadGameSaved() {
+    const loadName = loadGame.value;
+
+    const lvlStart = Number(localStorage.getItem(`${loadName}StartLevel`));
+    const rowStart = Number(localStorage.getItem(`${loadName}StartRow`));
+    const colStart = Number(localStorage.getItem(`${loadName}StartCol`));
+
+    const lvlFinish = Number(localStorage.getItem(`${loadName}FinishLevel`));
+    const rowFinish = Number(localStorage.getItem(`${loadName}FinishRow`));
+    const colFinish = Number(localStorage.getItem(`${loadName}FinishCol`));
+
+    console.log(lvlStart, rowStart, colStart);
+;    
+    game = JSON.parse(localStorage.getItem(loadName));
+
+    const dimensions = game[0];
+    nLevels =  dimensions.levels;
+    nRows = dimensions.rows;
+    nCols = dimensions.cols;
+
+    gameMaze = new Array(nLevels).fill().map(() => new Array(nRows).fill().map(() => new Array(nCols).fill().map(() => Symbol())));
+    gameMap = new Map();
+
+    for(let i = 1; i < game.length; i++) {
+        gameMaze[game[i].level][game[i].row][game[i].col] = Symbol();
+        if (game[i].level === lvlStart && game[i].row === rowStart && game[i].col === colStart) {
+            gameMaze[game[i].level][game[i].row][game[i].col] = 'S';
+        } else if (game[i].level === lvlFinish && game[i].row === rowFinish && game[i].col === colFinish) {
+            gameMaze[game[i].level][game[i].row][game[i].col] = 'G';
+        }
+        const booleanArr = [game[i].left, game[i].right, game[i].forward, game[i].backward, game[i].up, game[i].down];
+        gameMap.set(gameMaze[game[i].level][game[i].row][game[i].col], booleanArr);
+    }
+    
+    displayGame(mazeDiv);
+}
+
+
 function startNewGame() {
+    name = nameInputHTML.value;
     nRows = Number(rowsHTML.value);
     nCols = Number(colsHTML.value);
     nLevels = Number(levelsHTML.value);
 
     game = new Maze3d(nLevels, nRows, nCols);
+    game.DFSGenerator();
+
+    rowsHTML.value = '';
+    colsHTML.value = '';
+    levelsHTML.value = '';
     
-    displayGame(game, mazeDiv);
+
+    game.gameSave(name);
+    loadBtn.addEventListener('click', loadGameSaved);
+
+    gameMaze = game.maze;
+    gameMap = game.moves;
+    
+    displayGame(mazeDiv);
 }
 
-function displayGame(game, elem) {
+function displayGame(elem) {
     elem.innerHTML = '';
-    piece.src = 'piece.png';
+    piece.src = 'images/piece.png';
     elem.appendChild(piece);
-
-    const gameMaze = game.maze;
-    const gameMap = game.moves;
+    mazeDiv.style.display = 'block';
 
     rowHeight = 100 / nRows;
     cellSize = 100 / nCols;
@@ -173,12 +257,18 @@ function displayGame(game, elem) {
                     startPosition[0] = i;
                     startPosition[1] = j;
                     startPosition[2] = k;
+                    localStorage.setItem(`${name}StartLevel`, `${i}`);
+                    localStorage.setItem(`${name}StartRow`, `${j}`);
+                    localStorage.setItem(`${name}StartCol`, `${k}`);
                     newLevel.style.display = 'block';
                     newCol.style.backgroundColor = 'green';
                 } else if (gameMaze[i][j][k] === 'G') {
                     finalPosition[0] = i;
                     finalPosition[1] = j;
                     finalPosition[2] = k;
+                    localStorage.setItem(`${name}FinishLevel`, `${i}`);
+                    localStorage.setItem(`${name}FinishRow`, `${j}`);
+                    localStorage.setItem(`${name}FinishCol`, `${k}`);
                     newCol.style.backgroundColor = 'red';
                 } else if (booleanArr[Moves.up] && booleanArr[Moves.down]) {
                     newCol.classList.add('upAndDown');
@@ -214,8 +304,8 @@ function displayGame(game, elem) {
 }
 
 function resetGame() {
-    mazeDiv.children[startPosition[0]+1].style.display = 'block';
     mazeDiv.children[currPos[0]+1].style.display = 'none';
+    mazeDiv.children[startPosition[0]+1].style.display = 'block';
 
     currPos[0] = startPosition[0];
     currPos[1] = startPosition[1];
@@ -225,47 +315,48 @@ function resetGame() {
     pieceStartTop = rowHeight / 4 + rowHeight * startPosition[1];
     piece.style.left = pieceStartLeft + '%';
     piece.style.top = pieceStartTop + '%';
+ 
 }   
 
 function makeMove(e) {
     switch (e.keyCode) {
         case 38:
-            if (game.moves.get(game.maze[currPos[0]][currPos[1]][currPos[2]])[Moves.forward]) {
+            if (gameMap.get(gameMaze[currPos[0]][currPos[1]][currPos[2]])[Moves.forward]) {
                 pieceStartTop -= rowHeight;
                 piece.style.top = pieceStartTop + '%';
                 currPos[1] -= 1;
             }
             break;
         case 39:
-            if (game.moves.get(game.maze[currPos[0]][currPos[1]][currPos[2]])[Moves.right]) {
+            if (gameMap.get(gameMaze[currPos[0]][currPos[1]][currPos[2]])[Moves.right]) {
                 pieceStartLeft += cellSize;
                 piece.style.left = pieceStartLeft + '%';
                 currPos[2] += 1;
             }
             break;
         case 37:
-            if (game.moves.get(game.maze[currPos[0]][currPos[1]][currPos[2]])[Moves.left]) {
+            if (gameMap.get(gameMaze[currPos[0]][currPos[1]][currPos[2]])[Moves.left]) {
                 pieceStartLeft -= cellSize;
                 piece.style.left = pieceStartLeft + '%';
                 currPos[2] -= 1;
             }
             break;
         case 40:
-            if (game.moves.get(game.maze[currPos[0]][currPos[1]][currPos[2]])[Moves.backward]) {
+            if (gameMap.get(gameMaze[currPos[0]][currPos[1]][currPos[2]])[Moves.backward]) {
                 pieceStartTop += rowHeight;
                 piece.style.top = pieceStartTop + '%';
                 currPos[1] += 1;
             }
             break;
         case 34:
-            if (game.moves.get(game.maze[currPos[0]][currPos[1]][currPos[2]])[Moves.up]) {
+            if (gameMap.get(gameMaze[currPos[0]][currPos[1]][currPos[2]])[Moves.up]) {
                 currPos[0] += 1;
                 mazeDiv.children[currPos[0]].style.display = 'none';
                 mazeDiv.children[currPos[0]+1].style.display = 'block';
             }
             break;
         case 33:
-            if (game.moves.get(game.maze[currPos[0]][currPos[1]][currPos[2]])[Moves.down]) {
+            if (gameMap.get(gameMaze[currPos[0]][currPos[1]][currPos[2]])[Moves.down]) {
                 mazeDiv.children[currPos[0]+1].style.display = 'none';
                 mazeDiv.children[currPos[0]].style.display = 'block';
                 currPos[0] -= 1;
@@ -273,7 +364,6 @@ function makeMove(e) {
             break;
     }
     if (isWin(currPos, finalPosition)) {
-        isAWin = true;
         document.removeEventListener('keydown', makeMove);
         location = 'congrats.html';
     }
@@ -287,3 +377,5 @@ function isWin(currPos, finalPos) {
     }
     return true;
 }
+
+
